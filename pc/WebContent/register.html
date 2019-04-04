@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style>
+h1{
+text-align:center;
+color:#629CAB;
+}
+
+form{
+text-align: center;
+font-family:Segoe UI Black;
+font-size: large;
+}
+
+input[type=text],[type=password]
+{
+text-align:left;
+
+display:block;
+margin-bottom: 20px;
+margin-left: 40%;
+width: 20%;
+height: 0.8cm;
+}
+select{
+text-align:left;
+
+display:block;
+margin-bottom: 20px;
+margin-left: 40%;
+width: 20%;
+height: 0.8cm;
+}
+
+button{
+font-family: Arial Black;
+color: white;
+background-color: navy;
+cursor: pointer;
+}
+button:hover {
+  opacity: 0.5;
+}
+label{
+margin-bottom:20px;}
+
+</style>
+<script>  
+var request;  
+function sendInfo()  
+{  
+var v=document.Myform.uname.value;  
+if(v=='')
+	{alert ("username cannot be empty");
+	return false;
+	}
+	
+var url="index.jsp?val="+v;  
+  
+if(window.XMLHttpRequest){  
+request=new XMLHttpRequest();  
+}  
+else if(window.ActiveXObject){  
+request=new ActiveXObject("Microsoft.XMLHTTP");  
+}  
+  
+try{  
+request.onreadystatechange=getInfo;  
+request.open("GET",url,true);  
+request.send();  
+}catch(e){alert("Unable to connect to server");}  
+}  
+
+ function validate()
+ {  var adm=document.Myform.t5.value;
+    var pass="admin123";
+ if(adm==pass)
+	 {
+	 var p1=document.Myform.pass.value;
+		var p2=document.Myform.rpass.value;
+		var p3="Passwords dont match";
+		 if(p1!=p2)
+			     {alert("passwords don't match");
+			      return false;
+		}
+		 else 
+			 return true;
+	 }
+ else 
+	 {
+	 alert("Wrong Admin Id");
+	 return false;
+	 }
+	
+ }
+function getInfo(){
+if(request.readyState==4){  
+var val=request.responseText;
+document.getElementById('a').innerHTML=val;
+}  
+
+}  
+  
+</script> 
+</head>
+<body >
+
+<div class="container" >
+<h1>Admin Registration</h1>
+
+<form name="Myform" action="Myservlet" method="post" onsubmit="return validate()">
+<label for="t1" style="text-align: center;">Enter Name</label>
+<input type="text" name="t1" required>
+<label for="desig" style="text-align: center;" >Enter Designation</label>
+<select name="desig">
+<option value="Manager">Manager</option>
+<option value="Employee">Employee</option>
+</select>
+
+<label for="t5" style="text-align: center;">Enter Admin Access Id</label>
+<input type="text" name="t5" required>
+<label for="t2" style="text-align: center;">Enter Mobile No</label>
+<input type="text" name="t2" required>
+<label for="t3" style="text-align: center;">Enter Email Id</label>
+<input type="text" name="t3" required>
+<label for="uname" style="text-align: center;">Enter UserName</label>
+<input type="text" name="uname" required><span id='a'></span><br>
+<br><label for="pass" style="text-align: center;">Enter Password</label>
+<input type="password" name="pass" onclick="return sendInfo()" required>
+<label for="rpass" style="text-align: center;">Re-Enter Password</label>
+<input type="password" name="rpass"  required>
+<h1 align="center"><button type ="submit">Register</button></h1>
+</form>
+</div>
+</body>
+</html>
